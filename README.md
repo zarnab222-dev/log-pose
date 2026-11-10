@@ -4,7 +4,7 @@ Log Pose stores dated primary-source evidence about software companies. Its broa
 
 This is an independent research project inspired by a conversation about investor research at Telescope Partners. It is not affiliated with Telescope and contains no internal Telescope material.
 
-The [public dashboard](https://logpose.mhaider.dev/) serves retained exports and a versioned, read-only market-field API. Vercel builds the repository's `web/` files and graph-query function from `main`; `vercel.json` owns their routes. Cloudflare keeps the `logpose` CNAME in DNS-only mode. Public market-field reads need no database. Ingestion, review writes, and the optional local Postgres API remain separate.
+The [public dashboard](https://logpose.zarnab.dev/) serves retained exports and a versioned, read-only market-field API. Vercel builds the repository's `web/` files and graph-query function from `main`; `vercel.json` owns their routes. Cloudflare keeps the `logpose` CNAME in DNS-only mode. Public market-field reads need no database. Ingestion, review writes, and the optional local Postgres API remain separate.
 
 ## Export-backed research dashboard
 
