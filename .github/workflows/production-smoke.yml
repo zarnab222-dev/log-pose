@@ -35,11 +35,11 @@ jobs:
     env:
       EXPECTED_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.commit_sha || github.event.deployment.sha }}
       DEPLOYMENT_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.deployment_url || github.event.deployment_status.environment_url }}
-      PRODUCTION_URL: https://logpose.mhaider.dev/
+      PRODUCTION_URL: https://logpose.zarnab.dev/
       ALIAS_URL: https://log-pose-five.vercel.app/
       REPORT_PATH: /tmp/production-smoke.json
       BROWSER_REPORT_PATH: /tmp/production-browser.json
-      BASE_URL: https://logpose.mhaider.dev/
+      BASE_URL: https://logpose.zarnab.dev/
       PLAYWRIGHT_ROOT: /tmp/log-pose-browser
     steps:
       - name: Initialize machine-readable receipt
