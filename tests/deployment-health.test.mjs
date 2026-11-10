@@ -122,3 +122,25 @@ test('protected unique URL does not mask a failed public origin', async () => {
   assert(!report.unique_deployment.reason.includes('domain verified'));
   assert.deepEqual(JSON.parse(readFileSync(reportPath)), report);
 });
+
+
+test('production workflow targets the verified custom domain for both smoke stages', () => {
+  const workflow = readFileSync(new URL('../.github/workflows/production-smoke.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /PRODUCTION_URL: https:\/\/logpose\.zarnab\.dev\//);
+  assert.match(workflow, /BASE_URL: https:\/\/logpose\.zarnab\.dev\//);
+  assert.doesNotMatch(workflow, /logpose\.zarnab\.dev/);
+});
+
+test('retired production domain is rejected before any network access', async () => {
+  const reportPath = join(mkdtempSync(join(tmpdir(), 'log-pose-retired-')), 'report.json');
+  let fetchCalls = 0;
+  const report = await runHealthCheck({ expectedSha: commitSha,
+    productionUrl: 'https://logpose.zarnab.dev/',
+    aliasUrl: 'https://log-pose-five.vercel.app/',
+    deploymentUrl: '', attempts: 1, intervalMs: 0, reportPath,
+    fetchImpl: () => { fetchCalls += 1; throw new Error('must not fetch retired domain'); } });
+  assert.equal(report.status, 'failed');
+  assert.match(report.error, /canonical public origin/);
+  assert.equal(fetchCalls, 0);
+  assert.equal(report.attempts.length, 0);
+});
