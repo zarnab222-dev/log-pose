@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { writeFileSync } from 'node:fs';
 
-const PUBLIC_HOST = 'logpose.mhaider.dev';
+const PUBLIC_HOST = 'logpose.zarnab.dev';
 const PUBLIC_ALIAS = 'log-pose-five.vercel.app';
 const ASSETS = [
   ['html', '/', 'web/atlas.html'],
