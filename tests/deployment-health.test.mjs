@@ -128,14 +128,14 @@ test('production workflow targets the verified custom domain for both smoke stag
   const workflow = readFileSync(new URL('../.github/workflows/production-smoke.yml', import.meta.url), 'utf8');
   assert.match(workflow, /PRODUCTION_URL: https:\/\/logpose\.zarnab\.dev\//);
   assert.match(workflow, /BASE_URL: https:\/\/logpose\.zarnab\.dev\//);
-  assert.doesNotMatch(workflow, /logpose\.zarnab\.dev/);
+  assert.doesNotMatch(workflow, /https:\/\/zarnab\.dev\//);
 });
 
 test('retired production domain is rejected before any network access', async () => {
   const reportPath = join(mkdtempSync(join(tmpdir(), 'log-pose-retired-')), 'report.json');
   let fetchCalls = 0;
   const report = await runHealthCheck({ expectedSha: commitSha,
-    productionUrl: 'https://logpose.zarnab.dev/',
+    productionUrl: 'https://zarnab.dev/',
     aliasUrl: 'https://log-pose-five.vercel.app/',
     deploymentUrl: '', attempts: 1, intervalMs: 0, reportPath,
     fetchImpl: () => { fetchCalls += 1; throw new Error('must not fetch retired domain'); } });
